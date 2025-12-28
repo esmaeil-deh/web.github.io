@@ -1,9 +1,809 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <title>My Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Agentic AI trading platform template — autonomous strategies, risk controls, and execution." />
+  <title>Elisci Solutions — Agentic AI Trading</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.14);
+      --brand: #7c5cff;
+      --brand2:#2ee9a6;
+      --warn:#ffcc66;
+      --danger:#ff6b6b;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(900px 500px at 80% 15%, rgba(46,233,166,.22), transparent 60%),
+        radial-gradient(900px 600px at 60% 85%, rgba(255,204,102,.12), transparent 60%),
+        linear-gradient(180deg, #070a14, #0b1020 40%, #070a14);
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px 18px 80px;}
+    .top{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      position:sticky; top:0; z-index:40;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(11,16,32,.85), rgba(11,16,32,.55));
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:12px 0;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      min-width:220px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.55), transparent 60%),
+        linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 10px 30px rgba(124,92,255,.25);
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .brand b{letter-spacing:.2px}
+    .nav{
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center;
+    }
+    .nav a{
+      padding:9px 10px; border-radius:12px; color:var(--muted);
+      border:1px solid transparent;
+    }
+    .nav a:hover{color:var(--text); border-color:rgba(255,255,255,.12); background:rgba(255,255,255,.04)}
+    .ctaRow{display:flex; gap:10px; justify-content:flex-end; min-width:220px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:10px 14px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.22)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,92,255,.9), rgba(46,233,166,.75));
+      border-color: rgba(255,255,255,.18);
+    }
+    .btn.primary:hover{filter:saturate(1.05) brightness(1.02)}
+    .btn .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.15);
+    }
+
+    /* Hero */
+    .hero{padding:48px 0 18px}
+    .gridHero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px; border-radius:999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--muted);
+      width:fit-content;
+    }
+    .pulse{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--brand2);
+      box-shadow: 0 0 0 0 rgba(46,233,166,.6);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(46,233,166,.65)}
+      70%{box-shadow:0 0 0 12px rgba(46,233,166,0)}
+      100%{box-shadow:0 0 0 0 rgba(46,233,166,0)}
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size: clamp(34px, 4.2vw, 54px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size: 17px;
+      max-width: 62ch;
+    }
+    .heroActions{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .note{
+      margin-top:14px;
+      color: rgba(255,255,255,.62);
+      font-size: 13px;
+    }
+    .panel{
+      border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .panel::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 260px at 25% 20%, rgba(124,92,255,.18), transparent 55%),
+                  radial-gradient(380px 240px at 80% 35%, rgba(46,233,166,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .panelInner{position:relative; padding:18px}
+    .stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .stat{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding:12px 12px 10px;
+      min-height:92px;
+    }
+    .stat .label{color:var(--muted); font-size:12px}
+    .stat .val{font-size:22px; margin-top:6px; letter-spacing:-.2px}
+    .stat .hint{color:rgba(255,255,255,.62); font-size:12px; margin-top:6px}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.76);
+      font-size: 12px;
+    }
+    .badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px}
+    .chip{
+      font-size:12px; color:rgba(255,255,255,.72);
+      border:1px dashed rgba(255,255,255,.2);
+      padding:7px 10px; border-radius:999px;
+      background: rgba(255,255,255,.03);
+    }
+
+    /* Sections */
+    section{margin-top:44px}
+    .sectionTitle{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+      margin-bottom:14px;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:-.2px;
+    }
+    .sectionTitle p{margin:0; color:var(--muted); font-size:14px}
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.22);
+      min-height: 170px;
+    }
+    .icon{
+      width:38px; height:38px; border-radius:14px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      margin-bottom:10px;
+    }
+    .card h3{margin:0 0 6px; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace}
+    .divider{height:1px; background:rgba(255,255,255,.10); margin:18px 0}
+
+    /* Architecture */
+    .arch{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    .stack{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding:16px;
+    }
+    .step{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:12px 0;
+      border-top:1px solid rgba(255,255,255,.10);
+    }
+    .step:first-child{border-top:0; padding-top:0}
+    .num{
+      width:28px; height:28px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(124,92,255,.9), rgba(46,233,166,.7));
+      display:grid; place-items:center;
+      font-weight:700;
+      color:#060814;
+      flex: 0 0 28px;
+      margin-top:1px;
+    }
+    .step b{display:block; font-size:14px}
+    .step span{display:block; color:var(--muted); font-size:13px; margin-top:2px}
+
+    /* Pricing / CTA */
+    .pricing{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .priceCard{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      border-radius: var(--radius2);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .priceTop{display:flex; justify-content:space-between; align-items:flex-start; gap:12px}
+    .price{
+      font-size:34px; letter-spacing:-.6px;
+      margin-top:8px;
+    }
+    .small{color:var(--muted); font-size:13px}
+    .list{margin:12px 0 0; padding:0; list-style:none}
+    .list li{
+      padding:8px 0;
+      border-top:1px solid rgba(255,255,255,.10);
+      color:rgba(255,255,255,.78);
+      font-size:14px;
+      display:flex; gap:10px; align-items:flex-start;
+    }
+    .list li:first-child{border-top:0}
+    .check{
+      width:18px; height:18px; border-radius:6px;
+      background: rgba(46,233,166,.16);
+      border:1px solid rgba(46,233,166,.35);
+      flex:0 0 18px;
+      position:relative;
+      margin-top:2px;
+    }
+    .check:after{
+      content:"";
+      position:absolute;
+      left:5px; top:3px;
+      width:6px; height:10px;
+      border-right:2px solid rgba(46,233,166,.95);
+      border-bottom:2px solid rgba(46,233,166,.95);
+      transform: rotate(40deg);
+    }
+    .warn{
+      color: rgba(255,255,255,.76);
+      background: rgba(255,204,102,.10);
+      border:1px solid rgba(255,204,102,.25);
+      padding:10px 12px;
+      border-radius: 14px;
+      font-size:13px;
+    }
+
+    /* Footer */
+    footer{margin-top:54px; padding-top:18px; border-top:1px solid rgba(255,255,255,.10); color:var(--muted); font-size:13px}
+    .footRow{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .links{display:flex; gap:12px; flex-wrap:wrap}
+    .links a{color:rgba(255,255,255,.68)}
+    .links a:hover{color:rgba(255,255,255,.92)}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .gridHero{grid-template-columns: 1fr; }
+      .cards{grid-template-columns: 1fr;}
+      .arch{grid-template-columns: 1fr;}
+      .pricing{grid-template-columns: 1fr;}
+      .ctaRow{min-width:auto}
+      .brand{min-width:auto}
+    }
+
+    /* Modal */
+    .modalBackdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.6);
+      backdrop-filter: blur(6px);
+      display:none;
+      align-items:center; justify-content:center;
+      z-index:100;
+      padding:18px;
+    }
+    .modal{
+      width:min(720px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(20,25,45,.95), rgba(12,16,32,.95));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHeader{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .modalHeader b{letter-spacing:-.2px}
+    .x{
+      width:36px; height:36px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+    .modalBody{padding:14px 16px}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+      margin-top:10px;
+    }
+    label{font-size:12px; color:var(--muted)}
+    input, textarea{
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color:var(--text);
+      padding:10px 12px;
+      outline:none;
+    }
+    textarea{min-height:90px; resize:vertical}
+    input:focus, textarea:focus{border-color: rgba(124,92,255,.6)}
+    .modalFooter{
+      padding:14px 16px;
+      border-top:1px solid rgba(255,255,255,.10);
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      align-items:center;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello from my domain--test </h1>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>Elisci Solutions</b><br />
+          <span class="small">Agentic AI Trading</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#product">Product</a>
+        <a href="#how">How it works</a>
+        <a href="#risk">Risk</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="ctaRow">
+        <a class="btn" href="#pricing">See plans</a>
+        <button class="btn primary" id="openDemo"><span class="dot"></span>Request demo</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="gridHero">
+          <div>
+            <div class="kicker"><span class="pulse"></span> Autonomous agents • Risk-first execution • Human oversight</div>
+            <h1>Agentic AI that plans, trades, and learns — with guardrails.</h1>
+            <p class="sub">
+              Deploy goal-driven trading agents that research signals, generate hypotheses, simulate strategies,
+              and execute with strict risk controls. Designed for paper trading, research, and gradual production rollouts.
+            </p>
+            <div class="heroActions">
+              <button class="btn primary" id="openDemo2"><span class="dot"></span>Get a demo</button>
+              <a class="btn" href="#how">View architecture</a>
+              <a class="btn" href="#risk">Risk controls</a>
+            </div>
+            <div class="note">
+              <span class="badge">⚡ Fast backtests</span>
+              <span class="badge">🔒 Key isolation</span>
+              <span class="badge">🧾 Audit trails</span>
+            </div>
+          </div>
+
+          <aside class="panel" aria-label="Live snapshot (demo)">
+            <div class="panelInner">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                <div>
+                  <b style="font-size:14px;">Agent Console</b><br/>
+                  <span class="small">Example snapshot (demo only)</span>
+                </div>
+                <span class="chip mono">MODE: PAPER</span>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="stats" role="list">
+                <div class="stat" role="listitem">
+                  <div class="label">Primary objective</div>
+                  <div class="val">Risk-adjusted return</div>
+                  <div class="hint">Target: Sharpe ↑, DD ↓</div>
+                </div>
+                <div class="stat" role="listitem">
+                  <div class="label">Risk limits</div>
+                  <div class="val">Max DD: 2.0%</div>
+                  <div class="hint">Daily loss stop enabled</div>
+                </div>
+                <div class="stat" role="listitem">
+                  <div class="label">Agent state</div>
+                  <div class="val">Planning</div>
+                  <div class="hint">Scanning signals & regimes</div>
+                </div>
+                <div class="stat" role="listitem">
+                  <div class="label">Execution</div>
+                  <div class="val">0 orders</div>
+                  <div class="hint">Waiting for confirmation</div>
+                </div>
+              </div>
+
+              <div class="badges" aria-label="Capabilities">
+                <span class="chip">Regime detection</span>
+                <span class="chip">Pairs / mean reversion</span>
+                <span class="chip">News sentiment (optional)</span>
+                <span class="chip">Portfolio constraints</span>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="warn">
+                <b>Disclaimer:</b> This template is for demonstration only. Trading involves risk and may result in losses.
+                Add compliance text that matches your jurisdiction and product.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="product">
+        <div class="sectionTitle">
+          <div>
+            <h2>Product</h2>
+            <p>Agentic workflow from research → simulation → execution → monitoring.</p>
+          </div>
+          <span class="chip mono">v0.1 template</span>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="icon" aria-hidden="true">🧠</div>
+            <h3>Strategy agents</h3>
+            <p>Goal-driven agents propose trades, explain rationale, and adapt to market regimes with configurable rules.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🧪</div>
+            <h3>Backtest & simulation</h3>
+            <p>Fast experimentation loop: feature generation, walk-forward evaluation, and paper-trading rehearsal.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">⚙️</div>
+            <h3>Execution engine</h3>
+            <p>Order sizing, slippage-aware routing, and guardrails. Supports “human-in-the-loop” approvals.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🛡️</div>
+            <h3>Risk & limits</h3>
+            <p>Daily loss stops, max drawdown controls, position caps, and portfolio constraints enforced at runtime.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🧾</div>
+            <h3>Audit & explainability</h3>
+            <p>Every decision logged: signals, prompts, confidence, and actions — ready for review and debugging.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">📈</div>
+            <h3>Monitoring</h3>
+            <p>Live dashboards for exposure, performance, anomalies, and drift detection with alerts & rollbacks.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="how">
+        <div class="sectionTitle">
+          <div>
+            <h2>How it works</h2>
+            <p>Reference architecture for agentic trading systems.</p>
+          </div>
+        </div>
+
+        <div class="arch">
+          <div class="stack">
+            <b>Agent lifecycle</b>
+            <div class="divider"></div>
+
+            <div class="step">
+              <div class="num">1</div>
+              <div>
+                <b>Observe</b>
+                <span>Fetch market data, news, and indicators. Normalize & cache features.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">2</div>
+              <div>
+                <b>Plan</b>
+                <span>Generate candidate strategies and define constraints (risk, exposure, time).</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">3</div>
+              <div>
+                <b>Simulate</b>
+                <span>Backtest, walk-forward, and stress test against slippage and regime shifts.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">4</div>
+              <div>
+                <b>Act</b>
+                <span>Place orders with size limits and guardrails. Optional approvals.</span>
+              </div>
+            </div>
+            <div class="step">
+              <div class="num">5</div>
+              <div>
+                <b>Learn</b>
+                <span>Update beliefs, retrain models, and record outcomes for continuous improvement.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <b>Example stack</b>
+            <div class="divider"></div>
+            <p class="small" style="margin:0 0 10px;">
+              Swap these with your actual stack. This is just a template.
+            </p>
+            <ul class="list">
+              <li><span class="check"></span><span><span class="mono">Data</span>: market feeds, fundamentals, optional sentiment.</span></li>
+              <li><span class="check"></span><span><span class="mono">Models</span>: time-series, regime, pair signals, RL (optional).</span></li>
+              <li><span class="check"></span><span><span class="mono">Orchestration</span>: agent planner + tool calls + memory/logging.</span></li>
+              <li><span class="check"></span><span><span class="mono">Execution</span>: broker API, slippage model, position manager.</span></li>
+              <li><span class="check"></span><span><span class="mono">Governance</span>: approvals, audit trails, alerting, rollbacks.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="risk">
+        <div class="sectionTitle">
+          <div>
+            <h2>Risk controls</h2>
+            <p>Risk-first design: limits enforced in code, not in hope.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="icon" aria-hidden="true">⛔</div>
+            <h3>Hard stops</h3>
+            <p>Daily loss stop, max drawdown, max leverage, max position size. Trades blocked if violated.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🔐</div>
+            <h3>Key isolation</h3>
+            <p>Separate read vs trade keys. Rotate keys and restrict IPs. Keep secrets out of the repo.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">👤</div>
+            <h3>Human approvals</h3>
+            <p>Optional review gate for strategy changes, new symbols, or large orders before execution.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="sectionTitle">
+          <div>
+            <h2>Pricing</h2>
+            <p>Example pricing section — replace with your real offering.</p>
+          </div>
+        </div>
+
+        <div class="pricing">
+          <div class="priceCard">
+            <div class="priceTop">
+              <div>
+                <b>Research & Paper</b><br/>
+                <span class="small">For prototyping agent strategies</span>
+                <div class="price">$0 <span class="small">/ month</span></div>
+              </div>
+              <span class="chip mono">PAPER</span>
+            </div>
+            <ul class="list">
+              <li><span class="check"></span><span>Agent strategy templates & configs</span></li>
+              <li><span class="check"></span><span>Backtests + walk-forward evaluation</span></li>
+              <li><span class="check"></span><span>Paper trading with logs & audits</span></li>
+              <li><span class="check"></span><span>Risk limits + alerts</span></li>
+            </ul>
+          </div>
+
+          <div class="priceCard">
+            <div class="priceTop">
+              <div>
+                <b>Production</b><br/>
+                <span class="small">For live execution with governance</span>
+                <div class="price">Custom <span class="small">pricing</span></div>
+              </div>
+              <span class="chip mono">LIVE</span>
+            </div>
+            <ul class="list">
+              <li><span class="check"></span><span>Broker integrations + routing</span></li>
+              <li><span class="check"></span><span>Human-in-the-loop approvals</span></li>
+              <li><span class="check"></span><span>Monitoring dashboards + incident playbooks</span></li>
+              <li><span class="check"></span><span>Compliance-ready audit trails</span></li>
+            </ul>
+            <div class="divider"></div>
+            <button class="btn primary" id="openDemo3" style="width:100%"><span class="dot"></span>Talk to us</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="sectionTitle">
+          <div>
+            <h2>FAQ</h2>
+            <p>Short answers your visitors expect.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Is this fully autonomous?</h3>
+            <p>No. You can run autonomous loops, but the system is designed for <b>guardrails</b> and optional approvals.</p>
+          </div>
+          <div class="card">
+            <h3>Can I use it for paper trading only?</h3>
+            <p>Yes — paper-first is recommended. Add live execution only after you validate performance and risk behavior.</p>
+          </div>
+          <div class="card">
+            <h3>What markets are supported?</h3>
+            <p>Template supports any market with a data feed + broker API (stocks/crypto/fx). You decide integrations.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footRow">
+          <div>
+            <b>Elisci Solutions</b> · <span class="small">Agentic AI Trading</span><br/>
+            <span class="small">© <span id="year"></span> Elisci Solutions. All rights reserved.</span>
+          </div>
+          <div class="links">
+            <a href="#product">Product</a>
+            <a href="#risk">Risk</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#" id="openDemoFooter">Contact</a>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="small">
+          <b>Risk disclosure:</b> Trading involves substantial risk and is not suitable for everyone. Past performance does not guarantee future results.
+          This site is a template; update legal/compliance language as needed.
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Simple modal (no backend). Replace form action with your email provider / form tool if needed. -->
+  <div class="modalBackdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Request demo">
+    <div class="modal">
+      <div class="modalHeader">
+        <b>Request a demo</b>
+        <button class="x" id="closeModal" aria-label="Close">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="small">This form is front-end only. To make it send email, connect a form service (Formspree, Getform, Netlify Forms, etc.).</div>
+
+        <form id="demoForm">
+          <div class="grid2">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" placeholder="Your name" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="usecase">Use case</label>
+            <input id="usecase" name="usecase" placeholder="Paper trading, research, live execution, etc." />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us what you’re building…"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modalFooter">
+        <span class="small" id="formStatus">We’ll respond as soon as possible.</span>
+        <button class="btn primary" id="submitDemo"><span class="dot"></span>Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Modal
+    const backdrop = document.getElementById("modalBackdrop");
+    const openButtons = ["openDemo","openDemo2","openDemo3","openDemoFooter"]
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+    const closeBtn = document.getElementById("closeModal");
+    const submitBtn = document.getElementById("submitDemo");
+    const statusEl = document.getElementById("formStatus");
+    const form = document.getElementById("demoForm");
+
+    function openModal(){
+      backdrop.style.display = "flex";
+      setTimeout(() => document.getElementById("name").focus(), 50);
+    }
+    function closeModal(){
+      backdrop.style.display = "none";
+    }
+    openButtons.forEach(btn => btn.addEventListener("click", (e) => { e.preventDefault(); openModal(); }));
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", (e) => { if(e.target === backdrop) closeModal(); });
+
+    // Fake submit (front-end only)
+    submitBtn.addEventListener("click", () => {
+      if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+      }
+      const data = Object.fromEntries(new FormData(form).entries());
+      console.log("Demo request:", data);
+
+      statusEl.textContent = "Submitted (demo). Connect a form service to receive emails.";
+      submitBtn.textContent = "Sent";
+      submitBtn.disabled = true;
+
+      setTimeout(() => {
+        closeModal();
+        submitBtn.textContent = "Submit";
+        submitBtn.disabled = false;
+        statusEl.textContent = "We’ll respond as soon as possible.";
+        form.reset();
+      }, 900);
+    });
+
+    // Smooth scroll for in-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const id = a.getAttribute("href");
+        if(!id || id === "#") return;
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    });
+  </script>
 </body>
 </html>
